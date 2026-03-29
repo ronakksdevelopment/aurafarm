@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Farm: The AI Initiative</title>
+    
+    <!-- Fonts: Montserrat (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --bg-color: #331623;
+            --primary-color: #FB5160;
+            --text-color: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Abstract Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. TYPOGRAPHY & UTILITIES
+           ========================================================================== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-head);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. BUTTONS & INPUTS
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 4px 15px rgba(251, 81, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(251, 81, 96, 0.5);
+            background-color: #ff6674;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            background: rgba(251, 81, 96, 0.05);
+        }
+
+        input, textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 10px rgba(251, 81, 96, 0.2);
+        }
+
+        /* ==========================================================================
+           4. SECTIONS
+           ========================================================================== */
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFF 0%, #AAA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+        }
+
+        .hero h2 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .tagline-strip {
+            display: inline-block;
+            background: rgba(251, 81, 96, 0.1);
+            border: 1px solid rgba(251, 81, 96, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: #ccc;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-15px) translateX(-50%); }
+            60% { transform: translateY(-7px) translateX(-50%); }
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-card p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Framework Section */
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .framework-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .framework-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .framework-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(251, 81, 96, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .framework-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .framework-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .goal-tag {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto 0;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--card-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.2rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Aura Net (Funnel) Section */
+        .funnel-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #step2-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Donation & Contact */
+        .qr-box {
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            margin: 2rem auto;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid rgba(251, 81, 96, 0.5);
+        }
+        
+        .qr-box::after {
+            content: "\f029"; /* QR Code icon fallback */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 5rem;
+            color: #333;
+        }
+
+        .qr-label {
+            font-family: var(--font-head);
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================================================
+           5. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .section {
+                padding: 4rem 1.5rem;
+            }
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .btn {
+                width: 100%;
+            }
+            .funnel-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Abstract Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- 1. HERO SECTION -->
+    <header class="hero">
+        <div class="tagline-strip reveal">Farm: Awakening ➤ Unreal ➤ Real ➤ Architect</div>
+        <h1 class="reveal">Aura Farm:<br>The AI Initiative</h1>
+        <h2 class="reveal" style="transition-delay: 0.1s">We don't teach chatting with AI.<br>We teach how to farm aura using AI.</h2>
+        <p class="hero-desc reveal" style="transition-delay: 0.2s">
+            Course: The AI Initiative — Absolute Zero to Aura Farming.<br>
+            An independent AI movement built to empower students, teachers, and beginners with real-world skills, not fake certificates.
+        </p>
+        <div class="hero-cta reveal" style="transition-delay: 0.3s">
+            <a href="#auranet" class="btn btn-primary"><i class="fa-solid fa-bolt"></i> Start Your Journey</a>
+            <a href="https://wa.me/917005966672" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Contact Initiator</a>
+        </div>
+        <a href="#about" class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></a>
+    </header>
+
+    <!-- 2. ABOUT / MOTIVE SECTION -->
+    <section id="about" class="section">
+        <div class="about-grid reveal">
+            <div>
+                <h2>The Motive</h2>
+                <p class="text-muted">The traditional learning system is broken. We are sold fake promises and useless certificates while real innovation passes us by.</p>
+                <p class="text-muted"><strong>Aura Farm exists to disrupt this.</strong> We focus on practical AI mastery. We are building real creators, starting from Tripura and scaling globally. No fluff. Just absolute power.</p>
+            </div>
+            <div class="about-card text-center">
+                <i class="fa-solid fa-fire-flame-curved card-icon" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Vision</h3>
+                <p>To architect a generation of untouchable creators who don't just use AI, but command it to shape reality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. AURA FRAMEWORK -->
+    <section id="framework" class="section">
+        <div class="text-center reveal">
+            <h2>The A.U.R.A Framework</h2>
+            <p class="text-muted">The exact blueprint to dominate the digital landscape.</p>
+        </div>
+        
+        <div class="framework-grid">
+            <div class="framework-card reveal" style="transition-delay: 0.1s">
+                <i class="fa-solid fa-brain card-icon"></i>
+                <h3>Awakening</h3>
+                <p class="text-muted">Core Brain & Command Logic. Master the psychology of prompting and fundamental AI behavior.</p>
+                <div class="goal-tag">Goal: Command Mastery</div>
+            </div>
+            
+            <div class="framework-card reveal" style="transition-delay: 0.2s">
+                <i class="fa-solid fa-wand-magic-sparkles card-icon"></i>
+                <h3>Unreal</h3>
+                <p class="text-muted">Visual Aura & Digital Media. Generate mind-bending graphics, videos, and UI assets from nothing.</p>
+                <div class="goal-tag">Goal: Visual Dominance</div>
+            </div>
+            
+            <div class="framework-card reveal" style="transition-delay: 0.3s">
+                <i class="fa-solid fa-laptop-code card-icon"></i>
+                <h3>Real</h3>
+                <p class="text-muted">Smart Office & Code Generation. Automate workflows and build functional software without typing syntax.</p>
+                <div class="goal-tag">Goal: System Architecture</div>
+            </div>
+            
+            <div class="framework-card reveal" style="transition-delay: 0.4s">
+                <i class="fa-solid fa-chart-line card-icon"></i>
+                <h3>Architect</h3>
+                <p class="text-muted">Offline AI & Earning Generation. Deploy local models and monetize your newly acquired God-tier skills.</p>
+                <div class="goal-tag">Goal: Financial Independence</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. COURSE TIMELINE -->
+    <section class="section">
+        <h2 class="text-center reveal">The 4 Months of Initiative</h2>
+        <div class="timeline reveal">
+            <div class="timeline-item">
+                <h3>Month 1: The Awakening</h3>
+                <p class="text-muted">Breaking the matrix. Understanding AI limitations, advanced logical prompting, and building the hacker mindset.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Month 2: Forging the Unreal</h3>
+                <p class="text-muted">Entering the visual realm. Mastering image generation, video synthesis, and creating a premium digital identity.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Month 3: Building the Real</h3>
+                <p class="text-muted">From theory to software. Using AI to generate code, automate daily office tasks, and build functional systems.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Month 4: The Architect Protocol</h3>
+                <p class="text-muted">Monetization and deployment. Running uncensored offline AI, freelancing, and establishing your Aura Farm.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. AURA NET (LEAD FUNNEL SYSTEM) -->
+    <section id="auranet" class="section">
+        <div class="text-center reveal" style="margin-bottom: 3rem;">
+            <h2>Aura Net Entry Protocol</h2>
+            <p class="text-muted">Initiate your journey. No turning back.</p>
+        </div>
+
+        <div class="funnel-container reveal">
+            <form id="auraForm" onsubmit="handleFormSubmit(event)">
+                <input type="text" id="fname" placeholder="Full Name" required>
+                <input type="text" id="school" placeholder="School / College Name" required>
+                <textarea id="goal" rows="4" placeholder="If you could build one AI app, what would it do?" required></textarea>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-solid fa-power-off"></i> Let's Begin</button>
+            </form>
+
+            <!-- Unlock System (Hidden initially) -->
+            <div id="step2-container" class="hidden text-center">
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Step 1 Complete.</h3>
+                <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.95rem;">Your message has been initiated. Now, claim your spot in the inner circle.</p>
+                <a href="https://chat.whatsapp.com/LSODg8wC9Kf98zZmbvkXKi" target="_blank" class="btn btn-outline" style="width: 100%; background: #25D366; color: white; border: none;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Step 2: Join Inner Circle
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6 & 7. INSTITUTIONS & DIRECT CONTACT -->
+    <section class="section">
+        <div class="about-grid">
+            <div class="about-card text-center reveal">
+                <i class="fa-solid fa-school card-icon"></i>
+                <h3 style="margin-bottom: 1rem;">For Institutions</h3>
+                <p class="text-muted" style="margin-bottom: 2rem;">We conduct FREE Future Tech AI Workshops for Schools & Colleges to upgrade the next generation.</p>
+                <a href="https://wa.me/917005966672?text=Hi!%20I%20am%20the%20Principal%2FHOD%20of%20%5BInstitution%20Name%5D%20and%20I%20want%20to%20book%20an%20AI%20Workshop." target="_blank" class="btn btn-outline">Book a Workshop</a>
+            </div>
+            
+            <div class="about-card text-center reveal" style="transition-delay: 0.2s">
+                <i class="fa-solid fa-headset card-icon"></i>
+                <h3 style="margin-bottom: 1rem;">Direct Access</h3>
+                <p class="text-muted" style="margin-bottom: 2rem;">Have questions? Need consultation? Get direct access to the Initiator via secure comms.</p>
+                <a href="https://wa.me/917005966672" target="_blank" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Contact Directly</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. DONATION / SUPPORT SECTION -->
+    <section class="section text-center reveal">
+        <h2>Fuel The Initiative</h2>
+        <p class="text-muted">Support the movement. Real infrastructure requires real energy.</p>
+        <div class="qr-box">
+            <!-- QR code graphic placeholder achieved via CSS ::after -->
+        </div>
+        <p class="qr-label">Scan for Initiative Support / Fees</p>
+    </section>
+
+    <!-- 9. FOOTER -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://wa.me/917005966672" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="mailto:ronakksdevelopment@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+            <a href="https://chat.whatsapp.com/LSODg8wC9Kf98zZmbvkXKi" target="_blank"><i class="fa-solid fa-user-group"></i></a>
+        </div>
+        <p style="font-family: var(--font-head); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem;">
+            Designed with <i class="fa-solid fa-heart" style="color: var(--primary-color);"></i> by Rajdeep Singh & Gemini AI
+        </p>
+        <p class="text-muted" style="font-size: 0.85rem; max-width: 600px; margin: 0 auto;">
+            This entire portfolio was built using AI coordination in minutes. Skills over promises.
+        </p>
+    </footer>
+
+    <!-- ==========================================================================
+         JAVASCRIPT
+         ========================================================================== -->
+    <script>
+        // 1. Scroll Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 2. Funnel Form Logic (Sub2Unlock)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Get values
+            const name = document.getElementById('fname').value.trim() || '[Name]';
+            const school = document.getElementById('school').value.trim() || '[School]';
+            const goal = document.getElementById('goal').value.trim();
+
+            // Construct WhatsApp Message
+            const message = `Hi! I'm ${name} from ${school}. I want to farm Aura and learn the AI Initiative.\n\nMy App Goal: ${goal}`;
+            const encodedMessage = encodeURIComponent(message);
+            const waLink = `https://wa.me/917005966672?text=${encodedMessage}`;
+
+            // Open WhatsApp in new tab
+            window.open(waLink, '_blank');
+
+            // Reveal Step 2 Button
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Initiated';
+            btn.style.backgroundColor = '#25D366'; // Success Green
+            btn.style.boxShadow = 'none';
+            btn.disabled = true;
+
+            const step2 = document.getElementById('step2-container');
+            step2.classList.remove('hidden');
+            step2.classList.add('fade-in');
+            
+            // Scroll slightly to show step 2
+            setTimeout(() => {
+                step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        // 3. Abstract Background Animation (Mouse Reactivity)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let mouse = { x: null, y: null };
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        // Touch support
+        window.addEventListener('touchmove', (e) => {
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.baseColor = 'rgba(251, 81, 96, '; // Primary Color
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > width || this.x < 0) this.speedX *= -1;
+                if (this.y > height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                
+                // Opacity based on distance to mouse
+                let opacity = 0.1;
+                if(mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if(distance < 200) {
+                        opacity = 0.1 + (200 - distance) / 400;
+                    }
+                }
+                
+                ctx.fillStyle = this.baseColor + opacity + ')';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let numParticles = (width * height) / 12000; // Responsive amount
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateBg() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw gradient orb following mouse
+            if(mouse.x != null) {
+                let gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 400);
+                gradient.addColorStop(0, 'rgba(251, 81, 96, 0.08)');
+                gradient.addColorStop(1, 'rgba(51, 22, 35, 0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Connect nearby particles
+            for(let a = 0; a < particles.length; a++) {
+                for(let b = a; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if(distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 - distance/2000})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateBg);
+        }
+
+        initParticles();
+        animateBg();
+
+        // Mouse out reset
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+    </script>
+</body>
+</html>
