@@ -846,7 +846,7 @@
                 <a href="#auranet" class="btn btn-primary">Claim Aura Advantage</a>
             </div>
             <div class="hero-cta-bottom">
-                <a href="https://wa.me/917005966672?text=Sir,%20I%20want%20to%20join%20the%20Aura%20Farm%20AI%20course" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Message</a>
+                <a href="https://wa.me/917005966672?text=Hii%20Sir,%20I%20want%20to%20join%20the%20Aura%20Farm%20AI%20course" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Message</a>
                 <a href="tel:+917005087244" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Direct</a>
             </div>
         </div>
@@ -1024,7 +1024,7 @@
                 <h3 style="margin-top: 1.5rem; font-size: 1.8rem; letter-spacing: 2px;">RAJDEEP SINGH</h3>
                 <p class="text-muted" style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; color: var(--primary-red);">AI Architect & Educator</p>
                 <div style="margin-top: 2rem;">
-                    <a href="https://wa.me/917005966672?text=Hi%20Rajdeep%20I%20want%20to%20learn%20from%20you" target="_blank" class="btn btn-outline" style="padding: 0.8rem 2rem; font-size: 0.9rem; width: auto; max-width: none;">Message Me</a>
+                    <a href="https://wa.me/917005966672?text=Hii%20Sir,%20I%20want%20to%20learn%20from%20you" target="_blank" class="btn btn-outline" style="padding: 0.8rem 2rem; font-size: 0.9rem; width: auto; max-width: none;">Message Me</a>
                 </div>
             </div>
         </div>
@@ -1067,7 +1067,7 @@
                     <h3 style="margin-bottom: 1.5rem; letter-spacing: 1px;">Upgrade Your Institute</h3>
                     <p class="text-muted" style="margin-bottom: 2.5rem; font-size: 1rem;">We conduct <strong>Free Future Tech AI Workshops</strong>. Bring the most demanding, high-paying tech skills directly to your students' campus.</p>
                 </div>
-                <a href="https://wa.me/917005966672?text=Sir,%20we%20want%20to%20book%20a%20free%20AI%20workshop%20for%20our%20institute." target="_blank" class="btn btn-outline" style="width: 100%; max-width: none;">Book Campus Workshop</a>
+                <a href="https://wa.me/917005966672?text=Hii%20Sir,%20we%20want%20to%20book%20a%20free%20AI%20workshop%20for%20our%20institute." target="_blank" class="btn btn-outline" style="width: 100%; max-width: none;">Book Campus Workshop</a>
             </div>
             
             <div class="about-card text-center reveal" style="transition-delay: 0.2s">
@@ -1077,7 +1077,7 @@
                     <p class="text-muted" style="margin-bottom: 2.5rem; font-size: 1rem;">Have serious questions? Want to join my online live classes across India via Google Meet? Talk directly to me.</p>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                    <a href="https://wa.me/917005966672?text=Sir,%20I%20have%20a%20query%20about%20the%20Aura%20Farm%20course." target="_blank" class="btn btn-primary" style="width: 100%; max-width: none;">Chat on WhatsApp</a>
+                    <a href="https://wa.me/917005966672?text=Hii%20Sir,%20I%20have%20a%20query%20about%20the%20Aura%20Farm%20course." target="_blank" class="btn btn-primary" style="width: 100%; max-width: none;">Chat on WhatsApp</a>
                     <a href="tel:+917005087244" class="btn btn-outline" style="width: 100%; max-width: none;"><i class="fa-solid fa-phone"></i> Call Direct</a>
                 </div>
             </div>
@@ -1163,7 +1163,7 @@
             const school = document.getElementById('school').value.trim() || '[School]';
             const goal = document.getElementById('goal').value.trim();
 
-            const message = `Sir, my name is ${name} from ${school}. I want to join the Aura Farm AI course. My goal is: ${goal}. I will now join the private group.`;
+            const message = `Hii Sir, my name is ${name} from ${school}. I want to join the Aura Farm AI course. My goal is: ${goal}. I'll join the private group from website.`;
             const encodedMessage = encodeURIComponent(message);
             const waLink = `https://wa.me/917005966672?text=${encodedMessage}`;
 
@@ -1235,7 +1235,7 @@
                 return;
             }
 
-            const waMessage = `*Aura Farm Feedback!*\n\n*Name:* ${name}\n*Profession:* ${profession}\n*Rating:* ${rating} Stars 🌟\n\n*Review:* ${message}`;
+            const waMessage = `Hii Sir, here is my feedback!\n\n*Name:* ${name}\n*Profession:* ${profession}\n*Rating:* ${rating} Stars 🌟\n\n*Review:* ${message}`;
             const encodedWaMessage = encodeURIComponent(waMessage);
             const waLink = `https://wa.me/917005966672?text=${encodedWaMessage}`;
 
@@ -1256,6 +1256,7 @@
 
         var player;
         var isPlaying = false;
+        var hasInteracted = false;
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
@@ -1285,10 +1286,11 @@
             var volumeSlider = document.getElementById('volume-slider');
             player.setVolume(volumeSlider.value);
             
-            player.playVideo();
+            player.playVideo(); // Will attempt autoplay, works on PC usually
             
             var playBtn = document.getElementById('toggle-music');
             playBtn.addEventListener('click', function() {
+                hasInteracted = true; // Mark as interacted manually
                 if (isPlaying) {
                     player.pauseVideo();
                     playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -1309,12 +1311,29 @@
             var playBtn = document.getElementById('toggle-music');
             if (event.data == YT.PlayerState.PLAYING) {
                 isPlaying = true;
+                hasInteracted = true; // Mark as successfully playing
                 playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             } else if (event.data == YT.PlayerState.PAUSED) {
                 isPlaying = false;
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
             }
         }
+
+        // Mobile Autoplay Fix (Requires user interaction)
+        function startMusicOnInteraction() {
+            if (!hasInteracted && player && typeof player.playVideo === 'function') {
+                player.playVideo();
+                hasInteracted = true;
+                // Cleanup listeners once interaction is registered
+                ['touchstart', 'click', 'scroll'].forEach(evt => {
+                    document.removeEventListener(evt, startMusicOnInteraction);
+                });
+            }
+        }
+
+        ['touchstart', 'click', 'scroll'].forEach(evt => {
+            document.addEventListener(evt, startMusicOnInteraction, { once: true, passive: true });
+        });
 
         // Custom Canvas Particles
         const canvas = document.getElementById('aura-canvas');
