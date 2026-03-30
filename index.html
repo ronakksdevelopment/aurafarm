@@ -1235,12 +1235,18 @@
             <div class="qr-container">
                 <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 1.1rem;">Real infrastructure requires real energy. Support our cause or scan to complete your admission fees securely.</p>
                 
-                <!-- Updated QR box with UPI intent and Image -->
-                <a href="upi://pay?pa=aldpain755@oksbi&pn=Aura%20Farm&cu=INR" class="qr-box animate-float" title="Tap to pay using GPay, Paytm, PhonePe, etc.">
-                    <img src="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png" alt="Payment Options">
-                </a>
+                <!-- Updated QR box (Scan Only) -->
+                <div class="qr-box animate-float" title="Scan using any UPI App">
+                    <img src="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png" alt="Scan to Pay">
+                </div>
                 
-                <p class="text-main" style="font-family: var(--font-head); letter-spacing: 2px; text-transform: uppercase;">Tap/Scan to Donate Or Pay</p>
+                <p class="text-main" style="font-family: var(--font-head); letter-spacing: 2px; text-transform: uppercase;">Scan to Donate Or Pay</p>
+                
+                <!-- UPI Copy Section -->
+                <div style="margin-top: 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: rgba(255, 255, 255, 0.03); padding: 10px 20px; border: 1px solid var(--border-color);">
+                    <span style="color: var(--text-muted); font-family: var(--font-body); font-size: 1rem; letter-spacing: 1px;" id="upi-id-text">aldpain755@oksbi</span>
+                    <button onclick="copyUPI()" title="Copy UPI ID" style="background: transparent; border: none; color: var(--primary-red); cursor: pointer; font-size: 1.2rem; transition: transform 0.2s ease;"><i class="fa-regular fa-copy"></i></button>
+                </div>
             </div>
             
             <div class="feedback-container">
@@ -1336,6 +1342,19 @@
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 400);
             }, 3500);
+        }
+
+        // New function to handle copying the UPI ID securely
+        function copyUPI() {
+            const upiText = "aldpain755@oksbi";
+            const tempInput = document.createElement("input");
+            tempInput.value = upiText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy"); // Safest method for cross-browser iFrame compatibility
+            document.body.removeChild(tempInput);
+            
+            showToast('UPI ID Copied to Clipboard!', 'fa-solid fa-copy');
         }
 
         function handleFormSubmit(e) {
