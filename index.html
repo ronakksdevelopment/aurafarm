@@ -1101,7 +1101,7 @@
                 <h3 style="margin-bottom: 1.5rem; letter-spacing: 1px;">Visitor Feedback</h3>
                 <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
                     <input type="text" id="fbName" placeholder="Your Name" required>
-                    <input type="text" id="fbProfession" placeholder="Profession" required>
+                    <input type="text" id="fbProfession" placeholder="School / College / Profession" required>
                     
                     <p class="text-muted" style="margin-bottom: 0.5rem; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Rate Your Vibe</p>
                     <div class="star-rating" id="star-rating">
@@ -1263,7 +1263,7 @@
                 width: '0',
                 videoId: 'I5LKHEq2Nh8',
                 playerVars: {
-                    'autoplay': 0,
+                    'autoplay': 1,
                     'controls': 0,
                     'disablekb': 1,
                     'fs': 0,
@@ -1275,7 +1275,8 @@
                     'iv_load_policy': 3
                 },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
@@ -1283,6 +1284,8 @@
         function onPlayerReady(event) {
             var volumeSlider = document.getElementById('volume-slider');
             player.setVolume(volumeSlider.value);
+            
+            player.playVideo();
             
             var playBtn = document.getElementById('toggle-music');
             playBtn.addEventListener('click', function() {
@@ -1300,6 +1303,17 @@
             volumeSlider.addEventListener('input', function() {
                 player.setVolume(this.value);
             });
+        }
+
+        function onPlayerStateChange(event) {
+            var playBtn = document.getElementById('toggle-music');
+            if (event.data == YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else if (event.data == YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
         }
 
         // Custom Canvas Particles
