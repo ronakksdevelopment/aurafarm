@@ -2228,12 +2228,13 @@ footer{
 
 <!-- ===================== CHATBOT ===================== -->
 <div class="chat-window" id="chatWindow" role="dialog" aria-label="Aura Intelligence Help Assistant">
-  <div class="chat-header">
+<div class="chat-header">
     <div class="ch-avatar"><i class="fa-solid fa-sparkles"></i></div>
     <div class="ch-info">
       <b>Aura Assistant</b>
       <span><i class="fa-solid fa-circle"></i> Online — Course & admissions help</span>
     </div>
+    <button class="ch-close" id="chatClear" aria-label="Clear conversation" title="Clear conversation" style="margin-left:auto;"><i class="fa-solid fa-broom"></i></button>
     <button class="ch-close" id="chatClose" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div class="chat-body" id="chatBody"></div>
@@ -2605,7 +2606,7 @@ window.addEventListener('scroll', function(){
 (function(){
 "use strict";
 
-var OPENROUTER_API_KEY = "sk-or-v1-0744a37be7020aaf36965c252475b2b77fcfc2b6eeda8174b9a825a9c391dac";
+var OPENROUTER_API_KEY = "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";
   // OpenRouter will try these in order and auto-fallback to the next
   // one if a model is rate-limited or down — all of them are free.
   var FREE_MODEL_FALLBACKS = [
@@ -2729,7 +2730,11 @@ var OPENROUTER_API_KEY = "sk-or-v1-0744a37be7020aaf36965c252475b2b77fcfc2b6eeda8
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
-  function initWelcome(){
+var chatInitialized = false;
+function initWelcome(){
+    if(chatInitialized) return;
+    chatInitialized = true;
+    chatBody.innerHTML = '';
     if(history.length === 0){
       appendMessage('bot', "Hi! I'm the **Aura Assistant** 👋 Ask me about the curriculum, fees, admissions, or how to join — online or offline in Agartala.");
       appendQuickReplies(['What does the course cover?', 'How much does it cost?', 'How do I enroll?']);
@@ -2751,8 +2756,18 @@ var OPENROUTER_API_KEY = "sk-or-v1-0744a37be7020aaf36965c252475b2b77fcfc2b6eeda8
     chatWindow.classList.remove('open');
     chatToggleIcon.className = 'fa-solid fa-comment-dots';
   }
-  chatToggle.addEventListener('click', function(){ isOpen ? closeChat() : openChat(); });
+chatToggle.addEventListener('click', function(){ isOpen ? closeChat() : openChat(); });
   chatClose.addEventListener('click', closeChat);
+
+  var chatClearBtn = document.getElementById('chatClear');
+  chatClearBtn.addEventListener('click', function(){
+    history = [];
+    try{ sessionStorage.removeItem(HISTORY_KEY); }catch(e){}
+    chatBody.innerHTML = '';
+    appendMessage('bot', "Conversation cleared. Ask me anything about Aura Intelligence's curriculum, fees, or admissions! 🌟");
+    appendQuickReplies(['What does the course cover?', 'How much does it cost?', 'How do I enroll?']);
+    showToast('Conversation cleared', 'fa-solid fa-broom');
+  });
 
   /* ============== SEND MESSAGE WITH RETRY + ABORT ============== */
   var MAX_RETRIES = 2;
@@ -2775,7 +2790,7 @@ function requestReply(attempt){
     currentController = new AbortController();
 
 var payload = {
-      model: "openrouter/auto",         // /auto selects best available free model automatically
+      model: "openrouter/auto",         // /auto lets OpenRouter pick the best available free model
       models: FREE_MODEL_FALLBACKS,     // explicit fallback list if /auto's pick is busy/down
       messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12)),
       max_tokens: 600,
