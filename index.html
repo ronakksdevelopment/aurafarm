@@ -2789,12 +2789,14 @@ function requestReply(attempt){
     if(currentController) currentController.abort();
     currentController = new AbortController();
 
+    var modelToUse = FREE_MODEL_FALLBACKS[Math.min(attempt, FREE_MODEL_FALLBACKS.length - 1)];
+
 var payload = {
-      model: "openrouter/auto",         // /auto lets OpenRouter pick the best available free model
-      models: FREE_MODEL_FALLBACKS,     // explicit fallback list if /auto's pick is busy/down
+      model: modelToUse,                // single real model string, like BrainyBot does
       messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12)),
       max_tokens: 600,
-      temperature: 0.6
+      temperature: 0.6,
+      stream: false
     };
 
     fetch("https://openrouter.ai/api/v1/chat/completions", {
