@@ -2605,7 +2605,7 @@ window.addEventListener('scroll', function(){
 (function(){
 "use strict";
 
-var OPENROUTER_API_KEY = "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";
+var OPENROUTER_API_KEY = "sk-or-v1-0744a37be7020aaf36965c252475b2b77fcfc2b6eeda8174b9a825a9c391dac";
   // OpenRouter will try these in order and auto-fallback to the next
   // one if a model is rate-limited or down — all of them are free.
   var FREE_MODEL_FALLBACKS = [
@@ -2775,9 +2775,8 @@ function requestReply(attempt){
     currentController = new AbortController();
 
 var payload = {
-      model: FREE_MODEL_FALLBACKS[0],   // primary free model
-      models: FREE_MODEL_FALLBACKS,     // OpenRouter auto-falls-back through this list if one is busy/down
-      route: "fallback",
+      model: "openrouter/auto",         // /auto selects best available free model automatically
+      models: FREE_MODEL_FALLBACKS,     // explicit fallback list if /auto's pick is busy/down
       messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12)),
       max_tokens: 600,
       temperature: 0.6
