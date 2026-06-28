@@ -2607,14 +2607,6 @@ window.addEventListener('scroll', function(){
 "use strict";
 
 var OPENROUTER_API_KEY = "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";
-  // OpenRouter will try these in order and auto-fallback to the next
-  // one if a model is rate-limited or down — all of them are free.
-  var FREE_MODEL_FALLBACKS = [
-    "meta-llama/llama-3.1-8b-instruct:free",
-    "google/gemini-2.0-flash-exp:free",
-    "mistralai/mistral-7b-instruct:free",
-    "qwen/qwen-2-7b-instruct:free"
-  ];
 
   var SYSTEM_PROMPT = "You are the Aura Assistant, the official help assistant for Aura Intelligence, a 6-month Advanced AI Mastery Program in Agartala, Tripura, India (also available online via Google Meet across India). " +
     "You ONLY answer questions about: Aura Intelligence's curriculum (the A.U.R.A framework: Awakening, Unreal, Real, Architect; 6 months; 80 classes across 28 weeks), admissions, fees (CBCE Skill Development: Rs 11,700 total; General Students: Rs 14,500 total), class schedule (max 3 classes/week, 1.5 hours each), instructor Rajdeep Singh, the course booklet, contact details (WhatsApp +91 7005966672, call +91 7005087244, email ronakksdevelopment@gmail.com), capstone projects, software stack, career outcomes, certification, and general website navigation. " +
@@ -2789,10 +2781,8 @@ function requestReply(attempt){
     if(currentController) currentController.abort();
     currentController = new AbortController();
 
-    var modelToUse = FREE_MODEL_FALLBACKS[Math.min(attempt, FREE_MODEL_FALLBACKS.length - 1)];
-
 var payload = {
-      model: modelToUse,                // single real model string, like BrainyBot does
+      model: "openrouter/auto",
       messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12)),
       max_tokens: 600,
       temperature: 0.6,
