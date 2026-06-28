@@ -2605,26 +2605,15 @@ window.addEventListener('scroll', function(){
 (function(){
 "use strict";
 
-/* ============================================================
-   AURA HELP ASSISTANT
-   ------------------------------------------------------------
-   IMPORTANT — READ BEFORE DEPLOYING:
-   This widget calls a backend endpoint at CHAT_API_ENDPOINT
-   instead of calling OpenRouter directly from the browser.
-
-   Why: any API key written into client-side JavaScript is
-   visible to every visitor via "View Page Source" or DevTools,
-   and gets scraped + abused within hours on a public site.
-
-   To make this live, deploy the tiny proxy function provided
-   separately (Cloudflare Worker, ~20 lines) which holds your
-   OpenRouter key as a server-side secret, then set
-   CHAT_API_ENDPOINT below to its URL. Until then, the widget
-   runs fully (UI, history, persona, errors) but shows a
-   "not connected yet" message instead of a live AI reply.
-   ============================================================ */
-
-  var CHAT_API_ENDPOINT = ""; // <-- paste your deployed Worker URL here, e.g. "https://aura-chat-proxy.yourname.workers.dev"
+var OPENROUTER_API_KEY = "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";
+  // OpenRouter will try these in order and auto-fallback to the next
+  // one if a model is rate-limited or down — all of them are free.
+  var FREE_MODEL_FALLBACKS = [
+    "meta-llama/llama-3.1-8b-instruct:free",
+    "google/gemini-2.0-flash-exp:free",
+    "mistralai/mistral-7b-instruct:free",
+    "qwen/qwen-2-7b-instruct:free"
+  ];
 
   var SYSTEM_PROMPT = "You are the Aura Assistant, the official help assistant for Aura Intelligence, a 6-month Advanced AI Mastery Program in Agartala, Tripura, India (also available online via Google Meet across India). " +
     "You ONLY answer questions about: Aura Intelligence's curriculum (the A.U.R.A framework: Awakening, Unreal, Real, Architect; 6 months; 80 classes across 28 weeks), admissions, fees (CBCE Skill Development: Rs 11,700 total; General Students: Rs 14,500 total), class schedule (max 3 classes/week, 1.5 hours each), instructor Rajdeep Singh, the course booklet, contact details (WhatsApp +91 7005966672, call +91 7005087244, email ronakksdevelopment@gmail.com), capstone projects, software stack, career outcomes, certification, and general website navigation. " +
@@ -2776,44 +2765,44 @@ window.addEventListener('scroll', function(){
     history.push({role:'user', content:text});
     persistHistory();
 
-    if(!CHAT_API_ENDPOINT){
-      showTyping();
-      setTimeout(function(){
-        removeTyping();
-        appendMessage('bot', "I'm not connected to the AI backend yet — the site owner needs to deploy the chat proxy and add its URL to the widget config. In the meantime, you can reach the team directly:");
-        appendQuickReplies(['WhatsApp the team', 'Call the team']);
-        history.push({role:'assistant', content:'(backend not configured)'});
-        persistHistory();
-      }, 600);
-      return;
-    }
-
     requestReply(0);
   }
 
-  function requestReply(attempt){
+function requestReply(attempt){
     chatSend.disabled = true;
     var typingEl = showTyping();
     if(currentController) currentController.abort();
     currentController = new AbortController();
 
-    var payload = {
-      messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12))
+var payload = {
+      model: FREE_MODEL_FALLBACKS[0],   // primary free model
+      models: FREE_MODEL_FALLBACKS,     // OpenRouter auto-falls-back through this list if one is busy/down
+      route: "fallback",
+      messages: [{role:'system', content: SYSTEM_PROMPT}].concat(history.slice(-12)),
+      max_tokens: 600,
+      temperature: 0.6
     };
 
-    fetch(CHAT_API_ENDPOINT, {
+    fetch("https://openrouter.ai/api/v1/chat/completions", {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + OPENROUTER_API_KEY,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'Aura Intelligence Help Assistant'
+      },
       body: JSON.stringify(payload),
       signal: currentController.signal
     })
     .then(function(res){
-      if(!res.ok) throw new Error('Server responded with ' + res.status);
+      if(!res.ok) throw new Error('OpenRouter responded with ' + res.status);
       return res.json();
     })
     .then(function(data){
       removeTyping();
-      var reply = (data && data.reply) ? data.reply : "Sorry, I couldn't generate a reply just now.";
+      var reply = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
+        ? data.choices[0].message.content
+        : "Sorry, I couldn't generate a reply just now.";
       appendMessage('bot', reply);
       history.push({role:'assistant', content:reply});
       persistHistory();
