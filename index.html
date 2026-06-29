@@ -2300,7 +2300,32 @@ footer{
 <!-- ===================== CHATBOT ===================== -->
 <div class="chat-window" id="chatWindow" role="dialog" aria-label="Aura Intelligence Help Assistant">
 <div class="chat-header">
-    <div class="ch-avatar"><i class="fa-solid fa-sparkles"></i></div>
+    <div class="ch-avatar" style="background:transparent;overflow:visible;">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Outer ring -->
+        <circle cx="18" cy="18" r="17" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+        <!-- Inner filled circle -->
+        <circle cx="18" cy="18" r="13" fill="rgba(255,255,255,0.15)"/>
+        <!-- Brain/neural arc top -->
+        <path d="M11 15 Q11 10 18 10 Q25 10 25 15" stroke="white" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.9"/>
+        <!-- Neural nodes -->
+        <circle cx="18" cy="10" r="1.5" fill="white" opacity="0.9"/>
+        <circle cx="11" cy="15" r="1.5" fill="white" opacity="0.9"/>
+        <circle cx="25" cy="15" r="1.5" fill="white" opacity="0.9"/>
+        <!-- Center pulse dot -->
+        <circle cx="18" cy="18" r="2.5" fill="white"/>
+        <!-- Connecting lines (neural network feel) -->
+        <line x1="18" y1="10" x2="18" y2="15.5" stroke="white" stroke-width="1.2" opacity="0.6"/>
+        <line x1="11" y1="15" x2="15.5" y2="18" stroke="white" stroke-width="1.2" opacity="0.6"/>
+        <line x1="25" y1="15" x2="20.5" y2="18" stroke="white" stroke-width="1.2" opacity="0.6"/>
+        <!-- Speech bubble tail dots (chatbot indicator) -->
+        <circle cx="13" cy="24" r="1.3" fill="white" opacity="0.7"/>
+        <circle cx="18" cy="26" r="1.3" fill="white" opacity="0.7"/>
+        <circle cx="23" cy="24" r="1.3" fill="white" opacity="0.7"/>
+        <!-- Arc connecting bottom dots -->
+        <path d="M13 24 Q18 28 23 24" stroke="white" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.6"/>
+      </svg>
+    </div>
     <div class="ch-info">
       <b>Aura Assistant</b>
       <span><i class="fa-solid fa-circle"></i> Online I Assistant Chatbot</span>
