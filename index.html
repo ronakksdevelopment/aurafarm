@@ -933,6 +933,30 @@ html.dark .funnel-success-icon{color:var(--gold);}
 }
 .qr-box:hover{transform:scale(1.04);}
 .qr-box img{width:100%;height:100%;object-fit:contain;}
+
+.upi-qr-wrap{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:var(--card);
+}
+.upi-qr-wrap svg{
+  width:88%;height:88%;display:block;
+}
+.upi-qr-wrap svg .qr-module{
+  fill:var(--wine);
+  opacity:0;
+  transform-origin:center;
+  transform:scale(0.4);
+  animation:qrModuleIn 0.45s var(--ease) forwards;
+}
+.upi-qr-wrap svg .qr-eye{
+  fill:var(--wine);
+}
+@keyframes qrModuleIn{
+  to{opacity:1;transform:scale(1);}
+}
+@media (prefers-reduced-motion: reduce){
+  .upi-qr-wrap svg .qr-module{animation:none;opacity:1;transform:scale(1);}
+}
 .upi-row{
   display:inline-flex;align-items:center;gap:0.8rem;
   background:var(--bg-alt);border:1px solid var(--line);border-radius:100px;
@@ -2157,37 +2181,8 @@ footer{
     <div class="support-grid reveal">
       <div class="qr-card">
         <p style="margin-bottom:0.5rem;">Real infrastructure requires real support. Scan to complete your admission fees securely, or contribute to the cause.</p>
-        <div class="qr-box" title="Scan using any UPI app">
-<canvas id="upiQRCanvas" width="200" height="200" aria-label="UPI QR code for aldpain755@oksbi" style="width:100%;height:100%;border-radius:12px;display:block;"></canvas>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script>
-(function(){
-  var isDark = document.documentElement.classList.contains('dark');
-  var canvas = document.getElementById('upiQRCanvas');
-  new QRCode(canvas, {
-    text: "upi://pay?pa=aldpain755@oksbi&pn=Ayush%20Debnath&aid=uGICAgMDw852MEA",
-    width: 200,
-    height: 200,
-    colorDark: isDark ? "#C2515D" : "#7A1F2B",
-    colorLight: isDark ? "#1F1813" : "#FFFFFF",
-    correctLevel: QRCode.CorrectLevel.H
-  });
-  document.getElementById('themeToggle').addEventListener('click', function(){
-    setTimeout(function(){
-      var dark = document.documentElement.classList.contains('dark');
-      canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-      new QRCode(canvas, {
-        text: "upi://pay?pa=aldpain755@oksbi&pn=Ayush%20Debnath&aid=uGICAgMDw852MEA",
-        width: 200,
-        height: 200,
-        colorDark: dark ? "#C2515D" : "#7A1F2B",
-        colorLight: dark ? "#1F1813" : "#FFFFFF",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }, 100);
-  });
-})();
-</script>
+        <div class="qr-box" id="upiQrBox" title="Scan using any UPI app">
+          <div id="upiQRWrap" class="upi-qr-wrap" aria-label="UPI QR code for aldpain755@oksbi"></div>
         </div>
         <p style="font-weight:600;color:var(--ink);margin-bottom:0.2rem;">Scan to Pay or Donate</p>
         <div class="upi-row">
@@ -2195,7 +2190,6 @@ footer{
           <button onclick="copyUPI()" title="Copy UPI ID" aria-label="Copy UPI ID"><i class="fa-regular fa-copy"></i></button>
         </div>
       </div>
-
       <div class="feedback-card">
         <h3 style="margin-bottom:1.3rem;">Visitor Feedback</h3>
         <form id="feedbackForm" novalidate>
@@ -2723,6 +2717,319 @@ window.addEventListener('scroll', function(){
     contextMenu.style.display = 'none';
   }
 }, {passive:true});
+
+})();
+</script>
+
+<script>
+(function(){
+"use strict";
+
+/* ============== SELF-CONTAINED QR CODE (no external CDN) ============== */
+var QR = (function(){
+  var EXP_TABLE = new Array(256), LOG_TABLE = new Array(256);
+  for(var i=0;i<8;i++) EXP_TABLE[i] = 1 << i;
+  for(var i=8;i<256;i++){
+    EXP_TABLE[i] = EXP_TABLE[i-4] ^ EXP_TABLE[i-5] ^ EXP_TABLE[i-6] ^ EXP_TABLE[i-8];
+  }
+  for(var i=0;i<255;i++) LOG_TABLE[EXP_TABLE[i]] = i;
+
+  function glog(n){ while(n<0) n+=255; while(n>=256) n-=255; return LOG_TABLE[n]; }
+  function gexp(n){ while(n<0) n+=255; while(n>=256) n-=255; return EXP_TABLE[n]; }
+
+  function Polynomial(num, shift){
+    var offset=0;
+    while(offset<num.length && num[offset]===0) offset++;
+    this.num = new Array(num.length - offset + shift);
+    for(var i=0;i<num.length-offset;i++) this.num[i]=num[i+offset];
+    for(var i=0;i<shift;i++) this.num[num.length-offset+i]=0;
+  }
+  Polynomial.prototype.get=function(i){return this.num[i];};
+  Polynomial.prototype.getLength=function(){return this.num.length;};
+  Polynomial.prototype.multiply=function(e){
+    var num=new Array(this.getLength()+e.getLength()-1);
+    for(var i=0;i<num.length;i++) num[i]=0;
+    for(var i=0;i<this.getLength();i++)
+      for(var j=0;j<e.getLength();j++)
+        num[i+j] ^= gexp(glog(this.get(i))+glog(e.get(j)));
+    return new Polynomial(num,0);
+  };
+  Polynomial.prototype.mod=function(e){
+    if(this.getLength()-e.getLength()<0) return this;
+    var ratio=glog(this.get(0))-glog(e.get(0));
+    var num=new Array(this.getLength());
+    for(var i=0;i<this.getLength();i++) num[i]=this.get(i);
+    for(var i=0;i<e.getLength();i++) num[i]^=gexp(glog(e.get(i))+ratio);
+    return new Polynomial(num,0).mod(e);
+  };
+
+  function getErrorCorrectPolynomial(ecLen){
+    var a=new Polynomial([1],0);
+    for(var i=0;i<ecLen;i++) a=a.multiply(new Polynomial([1,gexp(i)],0));
+    return a;
+  }
+
+  var RS_BLOCK_TABLE = {
+    1:[26,16],2:[44,28],3:[70,44],4:[100,64],5:[134,86],6:[172,108],7:[196,124],8:[242,154],9:[292,182],10:[346,216],
+    11:[404,254],12:[466,290],13:[532,334],14:[581,365],15:[655,415],16:[733,453],17:[815,507],18:[901,563],19:[991,627],20:[1085,669]
+  };
+
+  function getBCHDigit(data){var digit=0;while(data!==0){digit++;data>>>=1;}return digit;}
+
+  function QR8bitByte(data){
+    this.data=data;
+    this.parsedData=[];
+    for(var i=0,l=data.length;i<l;i++){
+      var b=[];
+      var c=data.charCodeAt(i);
+      if(c<128){ b.push(c); }
+      else if(c<2048){ b.push(192|(c>>6)); b.push(128|(c&63)); }
+      else if(c<55296||c>=57344){ b.push(224|(c>>12)); b.push(128|((c>>6)&63)); b.push(128|(c&63)); }
+      else { i++; c=65536+(((c&1023)<<10)|(data.charCodeAt(i)&1023)); b.push(240|(c>>18)); b.push(128|((c>>12)&63)); b.push(128|((c>>6)&63)); b.push(128|(c&63)); }
+      this.parsedData.push.apply(this.parsedData,b);
+    }
+  }
+  QR8bitByte.prototype.getLength=function(){return this.parsedData.length;};
+  QR8bitByte.prototype.write=function(buffer){for(var i=0;i<this.parsedData.length;i++) buffer.put(this.parsedData[i],8);};
+
+  function BitBuffer(){this.buffer=[];this.length=0;}
+  BitBuffer.prototype={
+    get:function(i){var bi=Math.floor(i/8);return ((this.buffer[bi]>>>(7-i%8))&1)===1;},
+    put:function(num,length){for(var i=0;i<length;i++) this.putBit(((num>>>(length-i-1))&1)===1);},
+    getLengthInBits:function(){return this.length;},
+    putBit:function(bit){var bi=Math.floor(this.length/8);
+      if(this.buffer.length<=bi) this.buffer.push(0);
+      if(bit) this.buffer[bi] |= (0x80>>>(this.length%8));
+      this.length++;
+    }
+  };
+
+  function chooseVersion(dataLen){
+    for(var v=1; v<=20; v++){
+      var cap = RS_BLOCK_TABLE[v][1] - 2;
+      if(dataLen <= cap) return v;
+    }
+    return 20;
+  }
+
+  function createData(version, data){
+    var buffer=new BitBuffer();
+    var byteData=new QR8bitByte(data);
+    buffer.put(4,4);
+    buffer.put(byteData.getLength(), version<=9?8:16);
+    byteData.write(buffer);
+
+    var totalDataCount = RS_BLOCK_TABLE[version][1];
+    if(buffer.getLengthInBits()+4 <= totalDataCount*8) buffer.put(0,4);
+    while(buffer.getLengthInBits()%8!==0) buffer.putBit(false);
+
+    var padByte=[0xEC,0x11];
+    var pi=0;
+    while(buffer.getLengthInBits() < totalDataCount*8){
+      buffer.put(padByte[pi%2],8);
+      pi++;
+    }
+    return createBytes(buffer, version);
+  }
+
+  function createBytes(buffer, version){
+    var totalCount = RS_BLOCK_TABLE[version][0];
+    var dataCount = RS_BLOCK_TABLE[version][1];
+    var ecCount = totalCount - dataCount;
+    var data=new Array(dataCount);
+    for(var i=0;i<dataCount;i++) data[i] = (i<buffer.buffer.length)?(buffer.buffer[i]&0xff):0;
+
+    var rsPoly=getErrorCorrectPolynomial(ecCount);
+    var rawPoly=new Polynomial(data, rsPoly.getLength()-1);
+    var modPoly=rawPoly.mod(rsPoly);
+    var ecBytes=new Array(rsPoly.getLength()-1);
+    for(var i=0;i<ecBytes.length;i++){
+      var modIndex=i+modPoly.getLength()-ecBytes.length;
+      ecBytes[i]=(modIndex>=0)?modPoly.get(modIndex):0;
+    }
+    return data.concat(ecBytes);
+  }
+
+  function QRCodeModel(version, data){
+    this.version=version;
+    this.moduleCount=version*4+17;
+    this.modules=[];
+    for(var r=0;r<this.moduleCount;r++){
+      this.modules[r]=new Array(this.moduleCount);
+      for(var c=0;c<this.moduleCount;c++) this.modules[r][c]=null;
+    }
+    this.dataCache=createData(version,data);
+    this.makeImpl();
+  }
+  QRCodeModel.prototype={
+    setupPositionProbePattern:function(row,col){
+      for(var r=-1;r<=7;r++){
+        if(row+r<=-1||this.moduleCount<=row+r) continue;
+        for(var c=-1;c<=7;c++){
+          if(col+c<=-1||this.moduleCount<=col+c) continue;
+          var v=(0<=r&&r<=6&&(c===0||c===6))||(0<=c&&c<=6&&(r===0||r===6))||(2<=r&&r<=4&&2<=c&&c<=4);
+          this.modules[row+r][col+c]=v;
+        }
+      }
+    },
+    setupTimingPattern:function(){
+      for(var r=8;r<this.moduleCount-8;r++){ if(this.modules[r][6]!==null) continue; this.modules[r][6]=(r%2===0); }
+      for(var c=8;c<this.moduleCount-8;c++){ if(this.modules[6][c]!==null) continue; this.modules[6][c]=(c%2===0); }
+    },
+    setupPositionAdjustPattern:function(){
+      var pos=this.getPatternPosition(this.version);
+      for(var i=0;i<pos.length;i++) for(var j=0;j<pos.length;j++){
+        var row=pos[i], col=pos[j];
+        if(this.modules[row][col]!==null) continue;
+        for(var r=-2;r<=2;r++) for(var c=-2;c<=2;c++){
+          this.modules[row+r][col+c] = (r===-2||r===2||c===-2||c===2||(r===0&&c===0));
+        }
+      }
+    },
+    getPatternPosition:function(version){
+      var PATTERN_POSITION_TABLE=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94]];
+      return PATTERN_POSITION_TABLE[version-1]||[];
+    },
+    setupTypeNumber:function(test){
+      var bits=this.getBCHTypeNumber(this.version);
+      for(var i=0;i<18;i++){
+        var mod=(!test && ((bits>>i)&1)===1);
+        this.modules[Math.floor(i/3)][i%3+this.moduleCount-8-3]=mod;
+      }
+      for(var i=0;i<18;i++){
+        var mod=(!test && ((bits>>i)&1)===1);
+        this.modules[i%3+this.moduleCount-8-3][Math.floor(i/3)]=mod;
+      }
+    },
+    getBCHTypeNumber:function(t){
+      if(t<7) return 0;
+      var G18=0x1F25, d=t<<12;
+      while(getBCHDigit(d)-getBCHDigit(G18)>=0) d^=(G18<<(getBCHDigit(d)-getBCHDigit(G18)));
+      return (t<<12)|d;
+    },
+    setupTypeInfo:function(test, maskPattern){
+      var data=(0<<3)|maskPattern;
+      var G15=0x537, G15_MASK=0x5412;
+      var d=data<<10;
+      while(getBCHDigit(d)-getBCHDigit(G15)>=0) d^=(G15<<(getBCHDigit(d)-getBCHDigit(G15)));
+      var bits=((data<<10)|d)^G15_MASK;
+      for(var i=0;i<15;i++){
+        var mod=(!test && ((bits>>i)&1)===1);
+        if(i<6) this.modules[i][8]=mod;
+        else if(i<8) this.modules[i+1][8]=mod;
+        else this.modules[this.moduleCount-15+i][8]=mod;
+      }
+      for(var i=0;i<15;i++){
+        var mod=(!test && ((bits>>i)&1)===1);
+        if(i<8) this.modules[8][this.moduleCount-i-1]=mod;
+        else if(i<9) this.modules[8][15-i-1+1]=mod;
+        else this.modules[8][15-i-1]=mod;
+      }
+      this.modules[this.moduleCount-8][8]=(!test);
+    },
+    mapData:function(data, maskPattern){
+      var inc=-1, row=this.moduleCount-1, bitIndex=7, byteIndex=0;
+      for(var col=this.moduleCount-1; col>0; col-=2){
+        if(col===6) col--;
+        while(true){
+          for(var c=0;c<2;c++){
+            if(this.modules[row][col-c]===null){
+              var dark=false;
+              if(byteIndex<data.length) dark=(((data[byteIndex]>>>bitIndex)&1)===1);
+              var mask=this.getMask(maskPattern,row,col-c);
+              if(mask) dark=!dark;
+              this.modules[row][col-c]=dark;
+              bitIndex--;
+              if(bitIndex===-1){byteIndex++;bitIndex=7;}
+            }
+          }
+          row+=inc;
+          if(row<0||this.moduleCount<=row){ row-=inc; inc=-inc; break; }
+        }
+      }
+    },
+    getMask:function(pattern,i,j){ return (i+j)%2===0; },
+    makeImpl:function(){
+      for(var r=0;r<this.moduleCount;r++) for(var c=0;c<this.moduleCount;c++) this.modules[r][c]=null;
+      this.setupPositionProbePattern(0,0);
+      this.setupPositionProbePattern(this.moduleCount-7,0);
+      this.setupPositionProbePattern(0,this.moduleCount-7);
+      this.setupPositionAdjustPattern();
+      this.setupTimingPattern();
+      this.setupTypeNumber(false);
+      this.setupTypeInfo(false,0);
+      this.mapData(this.dataCache,0);
+    },
+    isDark:function(r,c){ return this.modules[r][c]; }
+  };
+
+  function encode(text){
+    var version=chooseVersion(text.length+4);
+    var model;
+    for(var v=version; v<=20; v++){
+      try{
+        model=new QRCodeModel(v, text);
+        return model;
+      }catch(e){ continue; }
+    }
+    return new QRCodeModel(20, text);
+  }
+
+  return { encode: encode };
+})();
+
+/* ============== RENDER QR AS THEMED ANIMATED SVG ============== */
+function renderUpiQR(){
+  var wrap = document.getElementById('upiQRWrap');
+  if(!wrap) return;
+  var upiString = "upi://pay?pa=aldpain755@oksbi&pn=Ayush%20Debnath&aid=uGICAgMDw852MEA";
+
+  var model;
+  try{
+    model = QR.encode(upiString);
+  }catch(e){
+    wrap.innerHTML = '<span style="font-size:0.75rem;color:var(--ink-faint);padding:1rem;display:block;">QR unavailable — use the UPI ID below</span>';
+    return;
+  }
+
+  var count = model.moduleCount;
+  var quiet = 2;
+  var size = count + quiet*2;
+  var svgParts = [];
+  svgParts.push('<svg viewBox="0 0 '+size+' '+size+'" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">');
+  svgParts.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="var(--card)"/>');
+
+  var delayStep = 0.0;
+  for(var r=0;r<count;r++){
+    for(var c=0;c<count;c++){
+      if(model.isDark(r,c)){
+        var x=c+quiet, y=r+quiet;
+        delayStep += 0.0009;
+        svgParts.push('<rect class="qr-module" x="'+x+'" y="'+y+'" width="1" height="1" style="animation-delay:'+delayStep.toFixed(4)+'s;"/>');
+      }
+    }
+  }
+  svgParts.push('</svg>');
+  wrap.innerHTML = svgParts.join('');
+}
+
+renderUpiQR();
+
+var upiThemeToggle = document.getElementById('themeToggle');
+if(upiThemeToggle){
+  upiThemeToggle.addEventListener('click', function(){
+    setTimeout(function(){
+      var wrap = document.getElementById('upiQRWrap');
+      if(!wrap) return;
+      wrap.querySelectorAll('.qr-module').forEach(function(mod, idx){
+        mod.style.animation='none';
+        void mod.offsetWidth;
+        mod.style.animation='';
+        mod.style.animationDelay=(idx*0.0009).toFixed(4)+'s';
+      });
+    }, 80);
+  });
+}
 
 })();
 </script>
