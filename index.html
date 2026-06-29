@@ -225,6 +225,11 @@ img{max-width:100%;display:block;}
   .section{padding:4.5rem 0;}
   .container{padding:0 1.25rem;}
 }
+@media (max-width:380px){
+  .container{padding:0 1rem;}
+  .section{padding:3.2rem 0;}
+  .section-tight{padding:2.6rem 0;}
+}
 
 .eyebrow{
   display:inline-flex;align-items:center;gap:0.6rem;
@@ -318,6 +323,10 @@ p{color:var(--ink-soft);}
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
 .brand{display:flex;align-items:center;gap:0.65rem;font-family:var(--font-display);font-weight:700;font-size:1.2rem;letter-spacing:-0.01em;}
+@media (max-width:380px){
+  .brand{font-size:1.02rem;gap:0.5rem;}
+  .brand-mark{width:30px;height:30px;font-size:0.85rem;}
+}
 .brand-mark{
   width:34px;height:34px;border-radius:9px;
   background:linear-gradient(135deg, var(--wine), var(--wine-dark));
@@ -470,7 +479,11 @@ html.dark .hero-meta span{color:var(--gold);}
   .hero-cta{flex-direction:column;}
   .hero-cta .btn{width:100%;}
 }
-
+@media (max-width:380px){
+  .hero-stats{gap:1.2rem 0.8rem;}
+  .hero-stat-num{font-size:1.5rem;}
+  .hero-meta span{font-size:0.76rem;padding:0.45rem 0.85rem;}
+}
 .scroll-cue{
   position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:0.5rem;
@@ -509,7 +522,13 @@ html.dark .hero-meta span{color:var(--gold);}
   .grid-3{grid-template-columns:1fr;}
   .grid-4{grid-template-columns:1fr;}
 }
-
+@media (max-width:920px){
+  .format-bar-grid{grid-template-columns:1fr 1fr !important;gap:1.4rem !important;}
+}
+@media (max-width:560px){
+  .format-bar-grid{grid-template-columns:1fr !important;padding:1.8rem 1.5rem !important;gap:1.3rem !important;}
+}
+  
 /* Reality check table */
 .reality-table-wrap{
   border-radius:var(--radius-md);
@@ -543,6 +562,9 @@ html.dark .reality-table tbody td.ai-way{color:var(--gold);}
 .audience-card{
   padding:2.4rem 2rem;text-align:left;
 }
+@media (max-width:480px){
+  .audience-card{padding:1.7rem 1.4rem;}
+}
 .audience-icon{
   width:52px;height:52px;border-radius:14px;
   background:var(--wine-soft);color:var(--wine);
@@ -565,6 +587,10 @@ html.dark .reality-table tbody td.ai-way{color:var(--gold);}
   color:var(--wine-soft);line-height:1;
   transition:color 0.4s var(--ease);
   user-select:none;
+}
+@media (max-width:420px){
+  .framework-letter{font-size:5rem;}
+  .framework-card{padding:2.1rem 1.5rem 1.8rem;}
 }
 .framework-card:hover .framework-letter{color:var(--wine-soft-strong);}
 .framework-icon{
@@ -607,6 +633,10 @@ html.dark .reality-table tbody td.ai-way{color:var(--gold);}
   transition:background 0.3s, border-color 0.3s;
   position:relative;
 }
+@media (max-width:560px){
+  .month-tab{min-width:128px;padding:1rem 1.1rem;}
+  .month-tab .m-name{font-size:0.9rem;}
+}
 .month-tab:hover{background:var(--wine-soft);}
 .month-tab.active{background:var(--card);border-bottom-color:var(--wine);}
 .month-tab .m-num{
@@ -616,6 +646,9 @@ html.dark .reality-table tbody td.ai-way{color:var(--gold);}
 .month-tab .m-sub{font-size:0.74rem;color:var(--ink-faint);}
 
 .month-panel{display:none;padding:2.4rem 2.2rem 2.6rem;}
+@media (max-width:560px){
+  .month-panel{padding:1.8rem 1.3rem 2rem;}
+}
 .month-panel.active{display:block;animation:fadeUp 0.5s var(--ease);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
@@ -625,6 +658,9 @@ html.dark .reality-table tbody td.ai-way{color:var(--gold);}
   border-radius:0 10px 10px 0;
   padding:1.1rem 1.4rem;
   margin-bottom:2rem;
+}
+@media (max-width:560px){
+  .month-objective{padding:0.95rem 1.1rem;margin-bottom:1.5rem;}
 }
 .month-objective .mo-label{
   font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
@@ -732,6 +768,10 @@ html.dark .month-objective .mo-label{color:var(--gold);}
   transform:rotate(35deg);
   font-family:var(--font-mono);
 }
+@media (max-width:420px){
+  .price-badge{right:-2.3rem;padding:0.35rem 2.4rem;font-size:0.68rem;}
+  .price-card{padding:2.1rem 1.5rem;}
+}
 .price-card h3{font-size:1.25rem;margin-bottom:0.3rem;}
 .price-card .price-strike{
   text-decoration:line-through;color:var(--ink-faint);font-size:1rem;margin-right:0.5rem;
@@ -770,6 +810,9 @@ html.dark .price-total b{color:var(--gold);}
 /* Instructor */
 .instructor-card{
   padding:3rem 2.6rem;text-align:center;
+}
+@media (max-width:480px){
+  .instructor-card{padding:2.2rem 1.5rem;}
 }
 .instructor-avatar{
   width:110px;height:110px;border-radius:50%;
@@ -817,6 +860,12 @@ html.dark .instructor-role{color:var(--gold);}
   .booklet-card{flex-direction:column;text-align:center;padding:2.2rem 1.6rem;}
   .booklet-actions{justify-content:center;}
 }
+@media (max-width:420px){
+  .booklet-card{padding:1.8rem 1.2rem;}
+  .booklet-icon{width:76px;height:94px;}
+  .booklet-actions{flex-direction:column;width:100%;}
+  .booklet-actions .btn{width:100%;}
+}
 
 /* Admissions funnel */
 .funnel-wrap{
@@ -824,10 +873,16 @@ html.dark .instructor-role{color:var(--gold);}
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:6.5rem 0;position:relative;
 }
+@media (max-width:600px){
+  .funnel-wrap{padding:3.5rem 0;}
+}
 .funnel-card{
   max-width:600px;margin:0 auto;
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
   padding:3rem;box-shadow:var(--shadow-lg);
+}
+@media (max-width:560px){
+  .funnel-card{padding:2rem 1.4rem;border-radius:18px;}
 }
 .field{margin-bottom:1.3rem;}
 .field label{
@@ -867,6 +922,10 @@ html.dark .funnel-success-icon{color:var(--gold);}
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
   padding:2.4rem;text-align:center;box-shadow:var(--shadow-sm);
 }
+@media (max-width:480px){
+  .qr-card{padding:1.7rem 1.3rem;}
+  .qr-box{width:170px;height:170px;}
+}
 .qr-box{
   width:200px;height:200px;background:#fff;margin:1.5rem auto;border-radius:16px;
   border:3px solid var(--wine);overflow:hidden;box-shadow:var(--shadow-md);
@@ -886,6 +945,9 @@ html.dark .funnel-success-icon{color:var(--gold);}
 .feedback-card{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
   padding:2.4rem;box-shadow:var(--shadow-sm);
+}
+@media (max-width:480px){
+  .feedback-card{padding:1.7rem 1.3rem;}
 }
 .star-rating{display:flex;gap:0.6rem;margin-bottom:1.3rem;}
 .star-rating i{font-size:1.5rem;color:var(--line-strong);cursor:pointer;transition:color 0.2s, transform 0.2s;}
@@ -910,6 +972,9 @@ html.dark .funnel-success-icon{color:var(--gold);}
 /* Workshop / direct comms two cards */
 .contact-card{
   padding:2.6rem 2.2rem;display:flex;flex-direction:column;justify-content:space-between;height:100%;
+}
+@media (max-width:480px){
+  .contact-card{padding:1.8rem 1.4rem;}
 }
 .contact-icon{
   width:54px;height:54px;border-radius:14px;background:var(--wine-soft);color:var(--wine);
@@ -994,7 +1059,10 @@ footer{
 }
 .chat-window.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
 @media (max-width:600px){
-  .chat-window{right:0.7rem;bottom:5.4rem;width:94vw;height:78vh;}
+  .chat-window{right:0.7rem;bottom:5.4rem;width:94vw;height:min(78vh,520px);max-height:calc(100vh - 7rem);}
+}
+@media (max-height:600px){
+  .chat-window{height:min(70vh,420px);bottom:5rem;}
 }
 .chat-header{
   display:flex;align-items:center;gap:0.8rem;
@@ -1448,7 +1516,7 @@ footer{
 <!-- ===================== PROGRAM FORMAT BAR ===================== -->
 <section class="section-tight">
   <div class="container">
-    <div class="card reveal" style="padding:2.4rem 2.2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem;">
+    <div class="card reveal format-bar-grid" style="padding:2.4rem 2.2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem;">
       <div style="display:flex;gap:0.9rem;align-items:flex-start;">
         <i class="fa-solid fa-calendar-days" style="color:var(--wine);font-size:1.2rem;margin-top:0.15rem;"></i>
         <div><b style="display:block;color:var(--ink);font-size:0.96rem;">6 Months Duration</b><span style="font-size:0.84rem;color:var(--ink-faint);">80 classes total</span></div>
