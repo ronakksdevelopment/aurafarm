@@ -2158,7 +2158,36 @@ footer{
       <div class="qr-card">
         <p style="margin-bottom:0.5rem;">Real infrastructure requires real support. Scan to complete your admission fees securely, or contribute to the cause.</p>
         <div class="qr-box" title="Scan using any UPI app">
-          <img src="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png" alt="UPI QR code to pay or donate to Aura Intelligence" loading="lazy">
+          <canvas id="upiQRCanvas" width="200" height="200" aria-label="UPI QR code for aldpain755@oksbi" style="width:100%;height:100%;border-radius:12px;display:block;"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var isDark = document.documentElement.classList.contains('dark');
+  var canvas = document.getElementById('upiQRCanvas');
+  new QRCode(canvas, {
+    text: "upi://pay?pa=aldpain755@oksbi&pn=Ayush%20Debnath&aid=uGICAgMDw852MEA",
+    width: 200,
+    height: 200,
+    colorDark: isDark ? "#C2515D" : "#7A1F2B",
+    colorLight: isDark ? "#1F1813" : "#FFFFFF",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    setTimeout(function(){
+      var dark = document.documentElement.classList.contains('dark');
+      canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+      new QRCode(canvas, {
+        text: "upi://pay?pa=aldpain755@oksbi&pn=Ayush%20Debnath&aid=uGICAgMDw852MEA",
+        width: 200,
+        height: 200,
+        colorDark: dark ? "#C2515D" : "#7A1F2B",
+        colorLight: dark ? "#1F1813" : "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }, 100);
+  });
+})();
+</script>
         </div>
         <p style="font-weight:600;color:var(--ink);margin-bottom:0.2rem;">Scan to Pay or Donate</p>
         <div class="upi-row">
