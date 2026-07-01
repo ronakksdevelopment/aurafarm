@@ -3,17 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Aura Intelligence — 6-Month Advanced AI Mastery Program | Agartala, Tripura</title>
-<meta name="description" content="Aura Intelligence is a 6-month, 80-class Advanced AI Mastery Program for students, dropouts and professionals. Learn prompting, generative art, automation, coding and offline AI — offline in Agartala, Tripura or online live across India.">
+<title>Aura Intelligence: 6 Month Advanced AI Mastery Program in Agartala, Tripura</title>
+<meta name="description" content="Aura Intelligence is a 6 month, 80 class Advanced AI Mastery Program for students, dropouts and professionals. Learn prompting, generative art, automation, coding and offline AI, available in person in Agartala, Tripura or live online across India.">
 <meta name="keywords" content="Aura Intelligence, AI course Tripura, AI course Agartala, AI mastery program, learn AI India, prompt engineering course, AI architect program, Rajdeep Singh AI course">
 <meta name="author" content="Rajdeep Singh">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://auraintelligence.in/">
+<link rel="icon" type="image/png" href="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png">
+<link rel="apple-touch-icon" href="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Aura Intelligence — 6-Month Advanced AI Mastery Program">
-<meta property="og:description" content="A premium 80-class AI education program built on the A.U.R.A framework. Absolute zero to AI Architect — offline in Tripura or online live across India.">
+<meta property="og:title" content="Aura Intelligence: 6 Month Advanced AI Mastery Program">
+<meta property="og:description" content="A premium 80 class AI education program built on the A.U.R.A framework, taking you from absolute zero to AI Architect, in person in Tripura or live online across India.">
 <meta property="og:image" content="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png">
 <meta property="og:url" content="https://auraintelligence.in/">
 <meta property="og:site_name" content="Aura Intelligence">
@@ -21,8 +23,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Aura Intelligence — 6-Month Advanced AI Mastery Program">
-<meta name="twitter:description" content="Absolute zero to AI Architect. 80 classes. 6 months. One framework. Offline in Tripura or online live across India.">
+<meta name="twitter:title" content="Aura Intelligence: 6 Month Advanced AI Mastery Program">
+<meta name="twitter:description" content="Absolute zero to AI Architect in 80 classes over 6 months, with one clear framework. In person in Tripura or live online across India.">
 <meta name="twitter:image" content="https://i.ibb.co/cc7qB4wG/Untitled447-20260330222559.png">
 
 <meta name="theme-color" content="#FAF6EF">
@@ -51,7 +53,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Course",
-  "name": "Aura Intelligence — 6-Month Advanced AI Mastery Program",
+  "name": "Aura Intelligence: 6 Month Advanced AI Mastery Program",
   "description": "An 80-class, 6-month program covering AI foundations, prompt engineering, generative art, productivity automation, advanced AI systems and monetization, built on the A.U.R.A framework (Awakening, Unreal, Real, Architect).",
   "provider": {
     "@type": "EducationalOrganization",
@@ -522,6 +524,10 @@ html.dark .hero-meta span{color:var(--gold);}
   .grid-3{grid-template-columns:1fr;}
   .grid-4{grid-template-columns:1fr;}
 }
+@media (min-width:601px) and (max-width:840px){
+  .capstone-grid, .stack-grid, .career-grid{grid-template-columns:1fr 1fr;}
+  .framework-grid{grid-template-columns:1fr 1fr;}
+}
 @media (max-width:920px){
   .format-bar-grid{grid-template-columns:1fr 1fr !important;gap:1.4rem !important;}
 }
@@ -772,6 +778,7 @@ html.dark .month-objective .mo-label{color:var(--gold);}
   .price-badge{right:-2.3rem;padding:0.35rem 2.4rem;font-size:0.68rem;}
   .price-card{padding:2.1rem 1.5rem;}
 }
+.price-card{overflow:hidden;}
 .price-card h3{font-size:1.25rem;margin-bottom:0.3rem;}
 .price-card .price-strike{
   text-decoration:line-through;color:var(--ink-faint);font-size:1rem;margin-right:0.5rem;
@@ -910,7 +917,7 @@ html.dark .instructor-role{color:var(--gold);}
 }
 html.dark .funnel-success-icon{color:var(--gold);}
 .funnel-success h3{margin-bottom:0.6rem;}
-.funnel-success p{margin-bottom:1.6rem;font-size:0.95rem;}
+.funnel-success p{margin-bottom:1.6rem;font-size:0.95rem;word-break:break-word;overflow-wrap:break-word;}
 
 .hidden{display:none !important;}
 .fade-in{animation:fadeUp 0.5s var(--ease);}
@@ -936,10 +943,13 @@ html.dark .funnel-success-icon{color:var(--gold);}
 
 .upi-qr-wrap{
   width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  background:var(--card);
+  background:#FFFFFF;
   position:relative;
   overflow:hidden;
   border-radius:10px;
+}
+html.dark .upi-qr-wrap{
+  background:#FFFFFF;
 }
 .upi-qr-wrap svg{
   width:88%;height:88%;display:block;
@@ -949,10 +959,15 @@ html.dark .funnel-success-icon{color:var(--gold);}
   fill:var(--wine);
   opacity:0;
   transform-origin:center;
-  transform:scale(0.3) rotate(-25deg);
+  transform:scale(0.3);
   animation:qrModuleIn 0.5s var(--ease) forwards, qrModuleGlow 2.6s ease-in-out infinite;
 }
-.upi-qr-wrap svg .qr-eye{
+.upi-qr-wrap svg .qr-eye-ring{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:1;
+}
+.upi-qr-wrap svg .qr-eye-dot{
   fill:var(--wine);
 }
 @keyframes qrModuleIn{
@@ -1131,10 +1146,13 @@ footer{
 }
 .chat-window.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
 @media (max-width:600px){
-  .chat-window{right:0.7rem;bottom:5.4rem;width:94vw;height:min(78vh,520px);max-height:calc(100vh - 7rem);}
+  .chat-window{right:0.7rem;bottom:5.4rem;width:94vw;height:min(78vh,520px);max-height:calc(100dvh - 7rem);}
 }
 @media (max-height:600px){
   .chat-window{height:min(70vh,420px);bottom:5rem;}
+}
+@media (max-width:340px){
+  .chat-window{right:0.5rem;left:0.5rem;width:auto;}
 }
 .chat-header{
   display:flex;align-items:center;gap:0.8rem;
@@ -1271,6 +1289,62 @@ footer{
 
 .lazy-fade{opacity:0;transition:opacity 0.6s var(--ease);}
 .lazy-fade.loaded{opacity:1;}
+
+/* Custom cursor */
+@media (pointer: fine){
+  body{cursor:none;}
+  #customCursor, #customCursorRing{
+    position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    will-change:transform;
+  }
+  #customCursor{
+    width:8px;height:8px;background:var(--wine);
+    transition:width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  #customCursorRing{
+    width:34px;height:34px;border:1.5px solid var(--wine);
+    transition:width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.3s var(--ease), opacity 0.3s var(--ease);
+    opacity:0.55;
+  }
+  #customCursor.hover{width:14px;height:14px;background:var(--gold);}
+  #customCursorRing.hover{width:52px;height:52px;border-color:var(--gold);opacity:0.8;}
+  #customCursor.click{width:6px;height:6px;}
+  #customCursorRing.click{width:26px;height:26px;}
+}
+@media (pointer: coarse){
+  #customCursor, #customCursorRing{display:none;}
+}
+
+/* Interactive icon motion */
+.audience-icon, .framework-icon, .contact-icon, .booklet-icon, .instructor-avatar{
+  transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.card:hover .audience-icon, .card:hover .contact-icon{
+  transform:scale(1.1) rotate(-4deg);
+}
+.card:hover .framework-icon{
+  transform:scale(1.12) rotate(6deg);
+}
+.instructor-card:hover .instructor-avatar{
+  transform:scale(1.06) rotate(-3deg);
+}
+.career-pill i, .value-item i, .stack-card h4 i{
+  display:inline-block;
+  transition:transform 0.35s var(--ease);
+}
+.career-pill:hover i{transform:scale(1.25) rotate(8deg);}
+.value-item:hover i{transform:scale(1.2);}
+.stack-card:hover h4 i{transform:rotate(15deg) scale(1.15);}
+.theme-toggle i{transition:transform 0.4s var(--ease);}
+.qa-btn i{transition:transform 0.3s var(--ease);}
+.qa-btn:hover i{transform:scale(1.15);}
+.faq-q i.chev{transition:transform 0.35s var(--ease);}
+.week-acc-head .wk-icon{transition:transform 0.3s var(--ease);}
+.week-acc-head:hover .wk-icon{transform:scale(1.2);}
+.social-row a i{transition:transform 0.3s var(--ease);}
+.social-row a:hover i{transform:scale(1.2) rotate(-8deg);}
 </style>
 </head>
 <body>
@@ -1342,7 +1416,7 @@ footer{
   <div class="container hero-inner">
     <div class="hero-tag reveal">
       <i class="fa-solid fa-graduation-cap" style="color:var(--wine)"></i>
-      <b>2026–2027 Edition</b>&nbsp;·&nbsp;6-Month Advanced AI Mastery Program
+      <b>2026 to 2027 Edition</b>&nbsp;·&nbsp;6 Month Advanced AI Mastery Program
     </div>
 
     <h1 class="reveal">
@@ -1350,7 +1424,7 @@ footer{
     </h1>
 
     <p class="hero-desc reveal" style="transition-delay:0.08s;">
-      Aura Intelligence is an 80-class, 6-month program that turns absolute beginners into AI Architects — through the A.U.R.A framework: Awakening, Unreal, Real, and Architect. No coding background required. Just the willingness to learn.
+      Aura Intelligence is an 80 class, 6 month program that turns absolute beginners into AI Architects. It's built around the A.U.R.A framework: Awakening, Unreal, Real, and Architect. No coding background needed, just the willingness to learn.
     </p>
 
     <div class="hero-meta reveal" style="transition-delay:0.14s;">
@@ -1386,7 +1460,7 @@ footer{
       </div>
       <div>
         <div class="hero-stat-num" data-count="1.5"><span>1.5</span> Hrs</div>
-        <div class="hero-stat-label">Per Class Session</div>
+        <div class="hero-stat-label">Per Class</div>
       </div>
     </div>
   </div>
@@ -1609,7 +1683,7 @@ footer{
         <div><b style="display:block;color:var(--ink);font-size:0.96rem;">Final Certification</b><span style="font-size:0.84rem;color:var(--ink-faint);">Verified on graduation</span></div>
       </div>
     </div>
-    <p class="reveal" style="text-align:center;margin-top:1.5rem;font-size:0.88rem;color:var(--ink-faint);max-width:680px;margin-left:auto;margin-right:auto;">The 80-class curriculum is strategically distributed across 6 months. Classes run on alternate days, providing a natural, comfortable pace suited for full-time students and working professionals.</p>
+    <p class="reveal" style="text-align:center;margin-top:1.5rem;font-size:0.88rem;color:var(--ink-faint);max-width:680px;margin-left:auto;margin-right:auto;">The 80 class curriculum is spread evenly across 6 months. Classes run on alternate days, giving you a natural, comfortable pace that fits full time students and working professionals alike.</p>
   </div>
 </section>
 
@@ -2045,7 +2119,7 @@ footer{
       </div>
       <div class="booklet-text">
         <h3>Aura Intelligence — 2026–2027 Program Booklet</h3>
-        <p>The full curriculum roadmap, fee structure, software stack, career paths, and official intellectual property notice — straight from the source.</p>
+        <p>The full curriculum roadmap, fee structure, software stack, career paths, and official intellectual property notice, straight from the source.</p>
         <div class="booklet-actions">
           <a href="https://drive.google.com/file/d/1YkvPEuOTDSwpT9xwnWq93jCt2SRzxbyX/view?usp=sharing" target="_blank" class="btn btn-primary magnetic">
             <i class="fa-solid fa-download"></i> Download Booklet
@@ -2150,7 +2224,7 @@ footer{
     <div class="section-head center reveal">
       <span class="eyebrow">Initialization</span>
       <h2>Join the inner circle.</h2>
-      <p class="lede" style="margin:0 auto;">The world is dividing into two: those who command AI, and those replaced by it. <span class="text-wine" style="font-weight:600;">Which one will you be?</span></p>
+      <p class="lede" style="margin:0 auto;">The world is splitting into two groups: people who know how to use AI, and people who get replaced by it. <span class="text-wine" style="font-weight:600;">Which one will you be?</span></p>
     </div>
 
     <div class="funnel-card reveal">
@@ -2175,7 +2249,7 @@ footer{
       <div id="step2Container" class="hidden funnel-success">
         <div class="funnel-success-icon"><i class="fa-solid fa-shield-check"></i></div>
         <h3>Request Approved</h3>
-        <p>Your details have been routed to WhatsApp. <strong style="color:var(--ink);">Critical step:</strong> join the private group below to stay updated.</p>
+        <p>Your details have been sent to WhatsApp. <strong style="color:var(--ink);">One more step:</strong> join the private group below to stay updated.</p>
         <a href="https://chat.whatsapp.com/LSODg8wC9Kf98zZmbvkXKi" target="_blank" class="btn btn-outline btn-block">
           <i class="fa-solid fa-users"></i> Enter the Private Group
         </a>
@@ -2228,7 +2302,7 @@ footer{
 
     <div class="support-grid reveal">
       <div class="qr-card">
-        <p style="margin-bottom:0.5rem;">Real infrastructure requires real support. Scan to complete your admission fees securely, or contribute to the cause.</p>
+        <p style="margin-bottom:0.5rem;">Real infrastructure needs real support. Scan to pay your admission fees securely, or contribute to the cause.</p>
         <div class="qr-box" id="upiQrBox" title="Scan using any UPI app">
           <div id="upiQRWrap" class="upi-qr-wrap" aria-label="UPI QR code for aldpain755@oksbi"></div>
         </div>
@@ -2344,7 +2418,7 @@ footer{
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 Aura Intelligence. Curriculum, structure and methodology are intellectual property of Rajdeep Singh. All rights reserved.</p>
+      <p>&copy; 2026 Aura Intelligence. Curriculum, structure and methodology are intellectual property of Rajdeep Singh. All rights reserved.<br><span style="font-size:0.82rem;opacity:0.75;">Made with <i class="fa-solid fa-heart" style="color:var(--wine);font-size:0.75em;"></i> by Rajdeep Singh</span></p>
       <div class="social-row">
         <a href="https://wa.me/917005966672?text=Hii%20Sir%2C%20I%20am%20reaching%20out%20from%20the%20Aura%20Intelligence%20website." target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="mailto:ronakksdevelopment@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
@@ -2362,14 +2436,14 @@ footer{
     <a href="tel:+917005087244" class="qa-btn qa-call" aria-label="Call us"><i class="fa-solid fa-phone"></i></a>
   </div>
   <button class="qa-btn" id="qaToggle" aria-label="Quick actions"><i class="fa-solid fa-plus" id="qaToggleIcon"></i></button>
-  <button class="qa-btn qa-chat" id="chatToggle" aria-label="Open Aura Help Assistant" style="position:relative;">
+  <button class="qa-btn qa-chat" id="chatToggle" aria-label="Chat with Aria, your Aura Intelligence guide" style="position:relative;">
     <span class="pulse-ring" aria-hidden="true"></span>
     <i class="fa-solid fa-comment-dots" id="chatToggleIcon"></i>
   </button>
 </div>
 
 <!-- ===================== CHATBOT ===================== -->
-<div class="chat-window" id="chatWindow" role="dialog" aria-label="Aura Intelligence Help Assistant">
+<div class="chat-window" id="chatWindow" role="dialog" aria-label="Chat with Aria, Aura Intelligence's admissions guide">
 <div class="chat-header">
     <div class="ch-avatar" style="background:transparent;overflow:visible;">
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2397,9 +2471,9 @@ footer{
         <path d="M13 24 Q18 28 23 24" stroke="white" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.6"/>
       </svg>
     </div>
-    <div class="ch-info">
-      <b>Aura Assistant</b>
-      <span><i class="fa-solid fa-circle"></i> Online I Assistant Chatbot</span>
+<div class="ch-info">
+      <b>Aria · Admissions Guide</b>
+      <span><i class="fa-solid fa-circle"></i> Online now, ask me anything</span>
     </div>
 <button class="ch-close" id="chatClear" aria-label="Clear conversation" title="Clear conversation" style="margin-left:auto;"><i class="fa-solid fa-broom"></i></button>
     <button class="ch-close" id="chatClose" aria-label="Close chat" style="margin-left:0.5rem;"><i class="fa-solid fa-xmark"></i></button>
@@ -3040,26 +3114,43 @@ function renderUpiQR(){
     return;
   }
 
-  var count = model.moduleCount;
+var count = model.moduleCount;
   var quiet = 2;
   var size = count + quiet*2;
   var svgParts = [];
-  svgParts.push('<svg viewBox="0 0 '+size+' '+size+'" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">');
-  svgParts.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="var(--card)"/>');
+  svgParts.push('<svg viewBox="0 0 '+size+' '+size+'" xmlns="http://www.w3.org/2000/svg">');
+  svgParts.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="#FFFFFF"/>');
+
+  function isInEyeZone(r,c){
+    var z = 7;
+    if(r < z && c < z) return true;
+    if(r < z && c >= count-z) return true;
+    if(r >= count-z && c < z) return true;
+    return false;
+  }
 
   var delayStep = 0.0;
   for(var r=0;r<count;r++){
     for(var c=0;c<count;c++){
-      if(model.isDark(r,c)){
-        var x=c+quiet, y=r+quiet;
+      if(model.isDark(r,c) && !isInEyeZone(r,c)){
+        var x=c+quiet+0.5, y=r+quiet+0.5;
         delayStep += 0.0009;
-        svgParts.push('<rect class="qr-module" x="'+x+'" y="'+y+'" width="1" height="1" style="animation-delay:'+delayStep.toFixed(4)+'s;"/>');
+        svgParts.push('<circle class="qr-module" cx="'+x+'" cy="'+y+'" r="0.42" style="animation-delay:'+delayStep.toFixed(4)+'s;"/>');
       }
     }
   }
+
+  function eyePattern(originRow, originCol){
+    var cx = originCol+3+quiet+0.5, cy = originRow+3+quiet+0.5;
+    svgParts.push('<rect class="qr-eye-ring" x="'+(originCol+quiet+0.5)+'" y="'+(originRow+quiet+0.5)+'" width="6" height="6" rx="1.4"/>');
+    svgParts.push('<circle class="qr-eye-dot" cx="'+cx+'" cy="'+cy+'" r="1.6"/>');
+  }
+  eyePattern(0,0);
+  eyePattern(0,count-7);
+  eyePattern(count-7,0);
+
   svgParts.push('</svg>');
   wrap.innerHTML = svgParts.join('');
-}
 
 renderUpiQR();
 
@@ -3088,10 +3179,11 @@ if(upiThemeToggle){
 
 var OPENROUTER_API_KEY = "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";
 
-  var SYSTEM_PROMPT = "You are the Aura Assistant, the official help assistant for Aura Intelligence, a 6-month Advanced AI Mastery Program in Agartala, Tripura, India (also available online via Google Meet across India). " +
-    "You ONLY answer questions about: Aura Intelligence's curriculum (the A.U.R.A framework: Awakening, Unreal, Real, Architect; 6 months; 80 classes across 28 weeks), admissions, fees (CBCE Skill Development: Rs 11,700 total; General Students: Rs 14,500 total), class schedule (max 3 classes/week, 1.5 hours each), instructor Rajdeep Singh, the course booklet, contact details (WhatsApp +91 7005966672, call +91 7005087244, email ronakksdevelopment@gmail.com), capstone projects, software stack, career outcomes, certification, and general website navigation. " +
-    "If asked anything unrelated to Aura Intelligence or this website, politely decline and say you're dedicated exclusively to Aura Intelligence's courses, curriculum, admissions, and website support. " +
-    "Keep answers concise, warm, and encouraging. Use markdown formatting (bold, lists) where helpful. Always invite the person to WhatsApp or call for enrollment.";
+var SYSTEM_PROMPT = "Your name is Aria, the personal admissions guide for Aura Intelligence, a 6 month Advanced AI Mastery Program in Agartala, Tripura, India, also available live online via Google Meet across India. " +
+    "You talk like a real person who genuinely works here and knows every detail of the program. You are warm, patient, and a little informal, the way a helpful senior student or a friendly front desk person would be, never robotic, never like a generic FAQ bot. Use the visitor's name if they share it. Ask a small follow up question when it helps you give better guidance, but don't interrogate people. " +
+    "You know Aura Intelligence inside and out: the A.U.R.A framework (Awakening, Unreal, Real, Architect), the full 6 month, 80 class, 28 week curriculum, the class schedule (a maximum of 3 classes a week, 1.5 hours each), admissions and fees (CBCE Skill Development is 11,700 rupees total, General Students is 14,500 rupees total), the 4 capstone projects, the software stack students use, career outcomes, the certification students earn, the instructor Rajdeep Singh, and how to reach the team (WhatsApp +91 7005966672, phone +91 7005087244, email ronakksdevelopment@gmail.com). " +
+    "If someone asks about something unrelated to Aura Intelligence, gently steer the conversation back. Something like: that's outside what I can help with here, but I'd love to tell you more about the AI program if you're curious. Never pretend to be a generic AI model. You are Aria, and your whole job is helping people understand and join this program. " +
+    "Keep replies short and conversational, like a real chat message, not an essay. Use markdown sparingly (bold and short lists only when it truly helps clarity). When someone seems ready to enroll or has detailed questions, warmly suggest they message the team on WhatsApp or give them a call.";
 
   var chatToggle = document.getElementById('chatToggle');
   var chatToggleIcon = document.getElementById('chatToggleIcon');
@@ -3208,7 +3300,7 @@ function initWelcome(){
     chatInitialized = true;
     chatBody.innerHTML = '';
     if(history.length === 0){
-      appendMessage('bot', "Hi! I'm the **Aura Assistant** 👋 Ask me about the curriculum, fees, admissions, or how to join — online or offline in Agartala.");
+      appendMessage('bot', "Hey, I'm **Aria** 👋 I help people figure out if Aura Intelligence is the right fit and walk them through joining. What would you like to know first, the curriculum, the fees, or how enrollment works?");
       appendQuickReplies(['What does the course cover?', 'How much does it cost?', 'How do I enroll?']);
     } else {
       history.forEach(function(h){ appendMessage(h.role === 'assistant' ? 'bot' : 'user', h.content); });
@@ -3236,7 +3328,7 @@ chatToggle.addEventListener('click', function(){ isOpen ? closeChat() : openChat
     history = [];
     try{ sessionStorage.removeItem(HISTORY_KEY); }catch(e){}
     chatBody.innerHTML = '';
-    appendMessage('bot', "Conversation cleared. Ask me anything about Aura Intelligence's curriculum, fees, or admissions! 🌟");
+    appendMessage('bot', "All clear! I'm Aria, ask me anything about the curriculum, fees, or how to join. 🌟");
     appendQuickReplies(['What does the course cover?', 'How much does it cost?', 'How do I enroll?']);
     showToast('Conversation cleared', 'fa-solid fa-broom');
   });
@@ -3299,7 +3391,7 @@ var payload = {
       if(attempt < MAX_RETRIES){
         setTimeout(function(){ requestReply(attempt+1); }, 700 * (attempt+1));
       } else {
-        showError("I'm having trouble connecting right now. Please try again, or WhatsApp the team directly for immediate help.");
+        showError("Sorry, I'm having trouble connecting right now. Try again in a moment, or just WhatsApp the team directly and they'll help you out.");
         chatSend.disabled = false;
       }
     });
@@ -3324,5 +3416,55 @@ var payload = {
 })();
 </script>
 
+<div id="customCursor" aria-hidden="true"></div>
+<div id="customCursorRing" aria-hidden="true"></div>
+
+<script>
+(function(){
+  "use strict";
+  if(!window.matchMedia('(pointer: fine)').matches) return;
+
+  var dot = document.getElementById('customCursor');
+  var ring = document.getElementById('customCursorRing');
+  var mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', function(e){
+    mouseX = e.clientX; mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+  });
+
+  function animateRing(){
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  var hoverSelectors = 'a, button, .btn, .card, input, textarea, select, .week-acc-head, .faq-q, .month-tab, .qa-btn, .star-rating i';
+  document.addEventListener('mouseover', function(e){
+    if(e.target.closest(hoverSelectors)){
+      dot.classList.add('hover');
+      ring.classList.add('hover');
+    }
+  });
+  document.addEventListener('mouseout', function(e){
+    if(e.target.closest(hoverSelectors)){
+      dot.classList.remove('hover');
+      ring.classList.remove('hover');
+    }
+  });
+  document.addEventListener('mousedown', function(){
+    dot.classList.add('click');
+    ring.classList.add('click');
+  });
+  document.addEventListener('mouseup', function(){
+    dot.classList.remove('click');
+    ring.classList.remove('click');
+  });
+})();
+</script>
 </body>
 </html>
