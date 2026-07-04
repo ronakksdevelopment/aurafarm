@@ -955,11 +955,17 @@ html.dark .upi-qr-wrap{
   width:88%;height:88%;display:block;
   position:relative;z-index:1;
 }
+.upi-qr-wrap svg .qr-bg{
+  fill:#FFFFFF;
+}
+html.dark .upi-qr-wrap svg .qr-bg{
+  fill:#FFFFFF;
+}
 .upi-qr-wrap svg .qr-module{
-  fill:#1A1411;
+  fill:#000000;
 }
 html.dark .upi-qr-wrap svg .qr-module{
-  fill:#F3EAD9;
+  fill:#000000;
 }
 .upi-qr-wrap svg .qr-eye-ring{
   fill:none;
@@ -3069,7 +3075,7 @@ var count = model.moduleCount;
   var size = count + quiet*2;
   var svgParts = [];
   svgParts.push('<svg viewBox="0 0 '+size+' '+size+'" xmlns="http://www.w3.org/2000/svg">');
-  svgParts.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="#FFFFFF"/>');
+  svgParts.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" class="qr-bg"/>');
 
   function isInEyeZone(r,c){
     var z = 7;
